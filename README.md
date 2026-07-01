@@ -1,180 +1,128 @@
-[![GitHub Workflow Status (master)](https://img.shields.io/github/actions/workflow/status/http-party/http-server/node.js.yml?style=flat-square&branch=master)](https://github.com/http-party/http-server/actions)
-[![npm](https://img.shields.io/npm/v/http-server.svg?style=flat-square)](https://www.npmjs.com/package/http-server) [![homebrew](https://img.shields.io/homebrew/v/http-server?style=flat-square)](https://formulae.brew.sh/formula/http-server) [![npm downloads](https://img.shields.io/npm/dm/http-server?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/http-server)
-[![license](https://img.shields.io/github/license/http-party/http-server.svg?style=flat-square)](https://github.com/http-party/http-server/blob/master/LICENSE)
+# Wisp — A Modern, Animated, Cinematic Static HTTP Server 🌌
 
-# http-server: a simple static HTTP server
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/MdSagorMunshi/http-server/node.js.yml?style=flat-square&branch=master)](https://github.com/MdSagorMunshi/http-server/actions)
+[![npm](https://img.shields.io/npm/v/@ryanshelby/wisp.svg?style=flat-square)](https://www.npmjs.com/package/@ryanshelby/wisp)
+[![npm downloads](https://img.shields.io/npm/dm/@ryanshelby/wisp?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/@ryanshelby/wisp)
+[![license](https://img.shields.io/github/license/MdSagorMunshi/http-server.svg?style=flat-square)](https://github.com/MdSagorMunshi/http-server/blob/master/LICENSE)
 
-`http-server` is a simple, zero-configuration command-line static HTTP server.  It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development and learning.
+`wisp` is a modern, beautifully designed reimagining of the classic developer utility `http-server`. It lets you instantly share any directory over HTTP while presenting visitors with a stunning, glassmorphic dark interface featuring live file-watching, drag-and-drop file uploads, image/video thumbnail previews, and instant LAN access via QR code.
 
-![Example of running http-server](https://github.com/http-party/http-server/raw/master/screenshots/public.png)
+---
 
-## Installation:
+## ✨ Features
 
-#### Running on-demand:
+- **Cinematic Dark UI**: Elegant serif headers, glassmorphic list/grid toggles, and smooth CSS micro-animations.
+- **Drag & Drop Uploads**: Upload files directly to the current directory via a beautiful dropzone overlay.
+- **Live Watcher**: Real-time directory watching using WebSockets to automatically refresh the directory listing on file additions, deletions, or changes.
+- **Rich Media Previews**: Generates fast image/video thumbnail previews on-demand with local client caching.
+- **LAN Access QR Code**: Scan a QR code from the command line or UI to easily connect mobile/external devices on the same local network.
+- **Markdown Rendering**: Directly preview any Markdown file parsed beautifully inside a modern modal interface.
 
-Using `npx` you can run the script without installing it first:
+---
 
-    npx http-server [path] [options]
+## 🚀 Installation
 
-#### Globally via `npm`
+#### Run on-demand (without installing):
 
-    npm install --global http-server
-
-This will install `http-server` globally so that it may be run from the command line anywhere.
-
-#### Globally via Homebrew
-
-    brew install http-server
-     
-#### As a dependency in your `npm` package:
-
-    npm install http-server
-
-#### Using Docker
-
-Note: a public image is not provided currently, but you can build one yourself
-with the provided Dockerfile.
-
-1. Create an image
-   ```
-   docker build -t my-image .
-   ```
-2. Run a container
-   ```
-   docker run -p 8080:8080 -v "${pwd}:/public" my-image
-   ```
-   In the example above we're serving the directory `./` (working directory).
-   If you wanted to serve `./test` you'd replace `${pwd}` with `${pwd}/test`.
-
-## Usage:
-
-     http-server [path] [options]
-
-`[path]` defaults to `./public` if the folder exists, and `./` otherwise.
-
-*Now you can visit http://localhost:8080 to view your server*
-
-**Note:** Caching is on by default. Add `-c-1` as an option to disable caching.
-
-## Available Options:
-
-| Command         | 	Description         | Defaults  |
-| -------------  |-------------|-------------|
-|`-p` or `--port` |Port to use. Use `-p 0` to look for an open port, starting at 8080. It will also read from `process.env.PORT`. |8080 |
-|`-a`   |Address to use |0.0.0.0|
-|`--base-dir` | Base path to serve files from | `/` |
-|`-d`     |Show directory listings |`true` |
-|`-dir-overrides-404` | Whether `-d` should override magic `404.html` | `false`
-|`-i`   | Display autoIndex | `true` |
-|`-g` or `--gzip` |When enabled it will serve `./public/some-file.js.gz` in place of `./public/some-file.js` when a gzipped version of the file exists and the request accepts gzip encoding. If brotli is also enabled, it will try to serve brotli first.|`false`|
-|`-b` or `--brotli`|When enabled it will serve `./public/some-file.js.br` in place of `./public/some-file.js` when a brotli compressed version of the file exists and the request accepts `br` encoding. If gzip is also enabled, it will try to serve brotli first. |`false`|
-|`-e` or `--ext`  |Default file extension if none supplied |`html` | 
-|`-s` or `--silent` |Suppress log messages from output  | |
-|`--coop` |Enable COOP via the `Cross-Origin-Opener-Policy` header  | |
-|`--cors` |Enable CORS via the `Access-Control-Allow-Origin` header  | |
-|`--private-network-access` |Enable Private Network Access via the `Access-Control-Allow-Private-Network` header  | |
-|`--cors` | Enable CORS via the `Access-Control-Allow-Origin: *` header. Optionally provide comma-separated values to add to `Access-Control-Allow-Headers`  | |
-|`-H` or `--header` |Add an extra response header (can be used several times)  | |
-|`-o [path]` |Open browser window after starting the server. Optionally provide a URL path to open. e.g.: -o /other/dir/ | |
-|`-c` |Set cache time (in seconds) for cache-control max-age header, e.g. `-c10` for 10 seconds. To disable caching, use `-c-1`.|`3600` |
-|`-t` |Connection timeout in seconds, e.g. `-t60` for 1 minute. To disable timeout, use `-t0`.|`120` |
-|`-T` or `--title` |Custom title suffix for the terminal window. The title will be "http-server PORT [TITLE]".| |
-|`-U` or `--utc` |Use UTC time format in log messages.| |
-|`--log-ip` |Enable logging of the client's IP address |`false` |
-|`-P` or `--proxy` |Proxies all requests which can't be resolved locally to the given url. e.g.: -P http://someurl.com | |
-|`--proxy-options` |Pass proxy [options](https://github.com/http-party/node-http-proxy#options) using nested dotted objects. e.g.: --proxy-options.secure false | |
-|`--proxy-config` |Pass in `.json` configuration file or stringified JSON. e.g.: `./path/to/config.json` | |
-|`--proxy-all` |Forward every request to the proxy target instead of serving local files|`false`|
-|`--proxy-options` |Pass proxy [options](https://github.com/http-party/node-http-proxy#options) using nested dotted objects. e.g.: --proxy-options.secure false |
-|`--user` or `--username` |Username for basic authentication | |
-|`--password` |Password for basic authentication | |
-|`-S`, `--tls` or `--ssl` |Enable secure request serving with TLS/SSL (HTTPS)|`false`|
-|`-C` or `--cert` |Path to ssl cert file |`cert.pem` |
-|`-K` or `--key` |Path to ssl key file |`key.pem` |
-|`-r` or `--robots` | Automatically provide a /robots.txt (The content of which defaults to `User-agent: *\nDisallow: /`)  | `false` |
-|`--no-dotfiles` |Do not show dotfiles| |
-|`--mimetypes` |Path to a .types file for custom mimetype definition| |
-|`--hide-permissions` |Do not show file permissions| |
-|`--allowed-hosts` |Comma-separated list of hosts allowed to access the server. e.g.: `--allowed-hosts localhost,example.com`| |
-|`-h` or `--help` |Print this list and exit. |   |
-|`-v` or `--version`|Print the version and exit. | |
-| `--no-panic` | Don't print error stack in the console, put it in a log file | `false`|
-
-## Magic Files
-
-- `index.html` will be served as the default file to any directory requests.
-- `404.html` will be served if a file is not found. This can be used for Single-Page App (SPA) hosting to serve the entry page.
-
-## Catch-all redirect
-
-To implement a catch-all redirect, use the index page itself as the proxy with:
-
-```
-http-server --proxy http://localhost:8080?
+```bash
+npx @ryanshelby/wisp [path] [options]
 ```
 
-Note the `?` at the end of the proxy URL. Thanks to [@houston3](https://github.com/houston3) for this clever hack!
+#### Install globally via `npm`:
 
-## TLS/SSL
+```bash
+npm install --global @ryanshelby/wisp
+```
 
-First, you need to make sure that [openssl](https://github.com/openssl/openssl) is installed correctly, and you have `key.pem` and `cert.pem` files. You can generate them using this command:
+This will install the global `wisp` command on your system.
 
-``` sh
+---
+
+## 📖 Usage
+
+```bash
+wisp [path] [options]
+```
+
+`[path]` defaults to `./public` if that folder exists, and `./` otherwise.
+
+*Now visit `http://localhost:8080` to view your server.*
+
+**Note:** Caching is enabled by default. Add `-c-1` as an option to disable caching.
+
+---
+
+## 🛠️ Available Options
+
+| Option | Description | Default |
+| :--- | :--- | :--- |
+| `-p` or `--port` | Port to use. Use `-p 0` to find an open port starting at 8080. Can also be read from `process.env.PORT`. | `8080` |
+| `-a` | Address to bind to. | `0.0.0.0` |
+| `--base-dir` | Base path to serve files from. | `/` |
+| `-d` | Show directory listings. | `true` |
+| `--dir-overrides-404` | Whether `-d` should override magic `404.html`. | `false` |
+| `-i` | Display `autoIndex` files. | `true` |
+| `-g` or `--gzip` | Serve `.gz` compressed files when possible. | `false` |
+| `-b` or `--brotli` | Serve `.br` compressed files when possible. | `false` |
+| `-e` or `--ext` | Default file extension if none is supplied. | `html` |
+| `-s` or `--silent` | Suppress log output messages. | |
+| `--cors` | Enable CORS via `Access-Control-Allow-Origin: *`. | |
+| `-H` or `--header` | Add custom response headers (can be specified multiple times). | |
+| `-o [path]` | Automatically open the browser window after server starts. | |
+| `-c` | Cache-Control max-age header value (in seconds). Set to `-c-1` to disable caching. | `3600` |
+| `-t` | Connection timeout (in seconds). Set to `-t0` to disable. | `120` |
+| `-T` or `--title` | Custom console title suffix. | |
+| `-U` or `--utc` | Use UTC time format in log messages. | |
+| `--log-ip` | Log the client's IP address. | `false` |
+| `-P` or `--proxy` | Proxy unresolved requests to a remote server. | |
+| `--proxy-all` | Forward every single request to the proxy target. | `false` |
+| `--user` or `--username`| Username for basic authentication. | |
+| `--password` | Password for basic authentication. | |
+| `-S` or `--tls` | Enable secure HTTPS serving. | `false` |
+| `-C` or `--cert` | Path to your SSL certificate file. | `cert.pem` |
+| `-K` or `--key` | Path to your SSL private key file. | `key.pem` |
+| `-r` or `--robots` | Respond to `/robots.txt` automatically. | `false` |
+| `--no-dotfiles` | Hide dotfiles from listings. | `false` |
+| `--hide-permissions` | Hide file permission values. | `false` |
+| `--mimetypes` | Path to a custom `.types` file for MIME mappings. | |
+
+---
+
+## 🔒 TLS/SSL (HTTPS)
+
+You can generate local SSL keys using `openssl`:
+
+```bash
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
 ```
 
-You will be prompted with a few questions after entering the command. Use `127.0.0.1` as value for `Common name` if you want to be able to install the certificate in your OS's root certificate store or browser so that it is trusted.
+Then start the server specifying the certificate and key files:
 
-This generates a cert-key pair and it will be valid for 3650 days (about 10 years).
-
-Then you need to run the server with `-S` for enabling SSL and `-C` for your certificate file.
-
-``` sh
-http-server -S -C cert.pem
+```bash
+wisp -S -C cert.pem -K key.pem
 ```
 
-If you wish to use a passphrase with your private key you can include one in the openssl command via the -passout parameter (using password of foobar)
+---
 
+## 🤝 Development
 
-e.g.
-`openssl req -newkey rsa:2048 -passout pass:foobar -keyout key.pem -x509 -days 365 -out cert.pem`
+Clone the repository and install dependencies:
 
-For security reasons, the passphrase will only be read from the `NODE_HTTP_SERVER_SSL_PASSPHRASE` environment variable.
-
-
-This is what should be output if successful:
-
-``` sh
-Starting up http-server, serving ./ through https
-
-http-server settings:
-COOP: disabled
-CORS: disabled
-Cache: 3600 seconds
-Connection Timeout: 120 seconds
-Directory Listings: visible
-AutoIndex: visible
-Serve GZIP Files: false
-Serve Brotli Files: false
-Default File Extension: none
-
-Available on:
-  https://127.0.0.1:8080
-  https://192.168.1.101:8080
-  https://192.168.1.104:8080
-Hit CTRL-C to stop the server
+```bash
+git clone https://github.com/MdSagorMunshi/http-server.git
+cd http-server
+npm install
+npm start
 ```
 
-# Development
+Visit `http://localhost:8080` to see the dev server. Run the test suite via:
 
-Checkout this repository locally, then:
-
-```sh
-$ npm i
-$ npm start
+```bash
+npm test
 ```
 
-*Now you can visit http://localhost:8080 to view your server*
+---
 
-You should see the turtle image in the screenshot above hosted at that URL. See
-the `./public` folder for demo content.
+## License
+
+This project is licensed under the **MIT License**.

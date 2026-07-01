@@ -1,11 +1,11 @@
 {
   "name": "@ryanshelby/wisp",
-  "version": "14.1.2",
+  "version": "1.0.0",
   "description": "A simple zero-configuration command-line http server",
   "main": "./lib/http-server",
   "repository": {
     "type": "git",
-    "url": "git://github.com/http-party/http-server.git"
+    "url": "git://github.com/MdSagorMunshi/http-server.git"
   },
   "keywords": [
     "cli",
@@ -114,7 +114,7 @@
     "tap": "^21.0.1"
   },
   "bugs": {
-    "url": "https://github.com/http-party/http-server/issues"
+    "url": "https://github.com/MdSagorMunshi/http-server/issues"
   },
   "license": "MIT",
   "preferGlobal": true,
