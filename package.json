@@ -1,5 +1,5 @@
 {
-  "name": "http-server",
+  "name": "@ryanshelby/wisp",
   "version": "14.1.2",
   "description": "A simple zero-configuration command-line http server",
   "main": "./lib/http-server",
@@ -119,6 +119,9 @@
   "license": "MIT",
   "preferGlobal": true,
   "bin": {
-    "http-server": "./bin/http-server"
+    "wisp": "./bin/http-server"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
